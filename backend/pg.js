@@ -10,19 +10,17 @@
 
 // module.exports = pool;
 // model.js
-import pkg from "pg";
-const { Pool } = pkg;
+const { Pool } = require("pg");
 
-// ✅ PostgreSQL connection setup
+// PostgreSQL connection setup
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Render provides this automatically
   ssl: { rejectUnauthorized: false },
 });
 
-// ✅ Create tables and triggers
-export const initializeDatabase = async () => {
+// Create tables and triggers
+const initializeDatabase = async () => {
   const client = await pool.connect();
-
   try {
     console.log("📦 Initializing database...");
 
@@ -177,4 +175,4 @@ export const initializeDatabase = async () => {
   }
 };
 
-module.exports = pool;
+module.exports = { pool, initializeDatabase };
