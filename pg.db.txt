@@ -1,0 +1,156 @@
+-- =========================================
+-- 1. USERS TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.users
+(
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    role VARCHAR(50) DEFAULT 'user'
+);
+
+-- =========================================
+-- 2. QUIZ TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.quiz
+(
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    "Status" VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =========================================
+-- 3. QUESTION TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.question
+(
+    id SERIAL PRIMARY KEY,
+    quiz_id INT NOT NULL REFERENCES public.quiz(id) ON DELETE CASCADE,
+    question_text TEXT NOT NULL,
+    question_type VARCHAR(50),
+    marks INT,
+    correct_answer TEXT
+);
+
+-- =========================================
+-- 4. QUIZ_OPTION TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.quiz_option
+(
+    id SERIAL PRIMARY KEY,
+    question_id INT REFERENCES public.question(id) ON DELETE CASCADE,
+    option_text TEXT NOT NULL
+);
+
+-- =========================================
+-- 5. RESULT TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.result
+(
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    quiz_id INT NOT NULL REFERENCES public.quiz(id) ON DELETE CASCADE,
+    total_score INT DEFAULT 0,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, quiz_id)
+);
+
+-- =========================================
+-- 6. USER_ANSWER TABLE
+-- =========================================
+CREATE TABLE IF NOT EXISTS public.user_answer
+(
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    quiz_id INT NOT NULL REFERENCES public.quiz(id) ON DELETE CASCADE,
+    question_id INT NOT NULL REFERENCES public.question(id) ON DELETE CASCADE,
+    selected_option TEXT,
+    is_correct BOOLEAN NOT NULL,
+    marks_obtained INT DEFAULT 0,
+    UNIQUE(user_id, quiz_id, question_id)
+);
+
+-- =========================================
+-- 7. FUNCTION: CALCULATE MARKS
+-- =========================================
+CREATE OR REPLACE FUNCTION public.calculate_marks()
+RETURNS trigger
+LANGUAGE 'plpgsql'
+AS $BODY$
+DECLARE
+  correct_answer_var TEXT;
+  marks_var INT;
+BEGIN
+  SELECT correct_answer, marks
+  INTO correct_answer_var, marks_var
+  FROM question
+  WHERE id = NEW.question_id;
+
+  IF NEW.selected_option = correct_answer_var THEN
+    NEW.is_correct := TRUE;
+    NEW.marks_obtained := marks_var;
+  ELSE
+    NEW.is_correct := FALSE;
+    NEW.marks_obtained := 0;
+  END IF;
+
+  RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.calculate_marks()
+OWNER TO quize_0zik_user;
+
+-- Trigger for calculate_marks
+CREATE TRIGGER trg_calculate_marks
+BEFORE INSERT ON user_answer
+FOR EACH ROW
+EXECUTE FUNCTION public.calculate_marks();
+
+-- =========================================
+-- 8. FUNCTION: UPDATE TOTAL SCORE
+-- =========================================
+CREATE OR REPLACE FUNCTION public.update_total_score()
+RETURNS trigger
+LANGUAGE 'plpgsql'
+AS $BODY$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM result
+        WHERE user_id = NEW.user_id AND quiz_id = NEW.quiz_id
+    ) THEN
+        UPDATE result
+        SET total_score = (
+            SELECT SUM(marks_obtained)
+            FROM user_answer
+            WHERE user_id = NEW.user_id AND quiz_id = NEW.quiz_id
+        ),
+        submitted_at = NOW()
+        WHERE user_id = NEW.user_id AND quiz_id = NEW.quiz_id;
+    ELSE
+        INSERT INTO result (user_id, quiz_id, total_score, submitted_at)
+        VALUES (
+            NEW.user_id,
+            NEW.quiz_id,
+            (SELECT SUM(marks_obtained)
+             FROM user_answer
+             WHERE user_id = NEW.user_id AND quiz_id = NEW.quiz_id),
+            NOW()
+        );
+    END IF;
+
+    RETURN NEW;
+END;
+$BODY$;
+
+ALTER FUNCTION public.update_total_score()
+OWNER TO quize_0zik_user;
+
+-- Trigger for update_total_score
+CREATE TRIGGER trg_update_total_score
+AFTER INSERT ON user_answer
+FOR EACH ROW
+EXECUTE FUNCTION public.update_total_score();
