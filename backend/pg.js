@@ -177,4 +177,4 @@ export const initializeDatabase = async () => {
   }
 };
 
-export default pool;
+module.exports = pool;
