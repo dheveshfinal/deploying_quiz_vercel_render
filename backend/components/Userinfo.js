@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();  // <-- Capital R
-const pool = require("../pg");    // adjust path if needed
+const { pool, initializeDatabase }  = require("../pg");    // adjust path if needed
 
 // Get all users
 router.get("/userdetails", async (req, res) => {

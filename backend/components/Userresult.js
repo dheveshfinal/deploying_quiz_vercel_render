@@ -1,7 +1,7 @@
 // components/Userresult.js (backend)
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // your DB connection
+const { pool, initializeDatabase }  = require("../pg"); // your DB connection
 
 // Get user result with total possible marks
 router.get("/userresult/:userId/:quizId", async (req, res) => {

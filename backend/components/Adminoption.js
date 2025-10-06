@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg");
+const { pool, initializeDatabase } = require("../pg");
 
 // Get options for a question
 router.get("/adminoptions/:id", async (req, res) => {

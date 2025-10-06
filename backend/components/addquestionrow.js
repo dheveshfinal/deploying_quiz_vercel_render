@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // your PG pool
+const { pool, initializeDatabase }  = require("../pg"); // your PG pool
 
 // Add question row with options, quiz_id from path
 router.post("/addquestionrow/:quizId", async (req, res) => {

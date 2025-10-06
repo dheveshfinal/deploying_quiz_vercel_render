@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router(); // <-- create router
-const pool = require("../pg");   // correct path to pg.js
+const  { pool, initializeDatabase } = require("../pg");  // Destructure to get the actual pool
+  // correct path to pg.js
 const bcrypt = require("bcrypt");
 
 router.post("/signup", async (req, res) => {

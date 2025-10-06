@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg");
+const { pool, initializeDatabase } = require("../pg");
 
 // Add a new quiz
 router.post("/AddData", async (req, res) => {

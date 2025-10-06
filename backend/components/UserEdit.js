@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // adjust path to your pg connection
+const { pool, initializeDatabase }  = require("../pg"); // adjust path to your pg connection
 
 // Update user
 router.put("/userdetails/:id", async (req, res) => {

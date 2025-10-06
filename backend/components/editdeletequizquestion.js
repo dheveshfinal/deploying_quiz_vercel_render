@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg");
+const { pool, initializeDatabase }  = require("../pg");
 
 // Update a question by ID
 router.put("/question/:id", async (req, res) => {

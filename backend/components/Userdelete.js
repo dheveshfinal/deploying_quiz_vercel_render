@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // adjust path to your db connection
+const { pool, initializeDatabase }  = require("../pg"); // adjust path to your db connection
 
 // Delete user by ID
 router.delete("/userdetails/:id", async (req, res) => {

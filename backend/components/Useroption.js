@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg");
+const { pool, initializeDatabase }  = require("../pg");
 
 // ✅ Get all options for all questions
 router.get("/optionquestion", async (req, res) => {

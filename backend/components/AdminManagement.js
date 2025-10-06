@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg");
+const { pool, initializeDatabase }  = require("../pg");
 
 // Insert quiz data
 router.get("/Quizdetails", async (req, res) => {

@@ -1,7 +1,7 @@
 // routes/reviewanswer.js
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // DB connection
+const { pool, initializeDatabase }  = require("../pg"); // DB connection
 
 // Get all answered questions for a quiz by user
 router.get("/reviewanswer/:userId/:quizId", async (req, res) => {

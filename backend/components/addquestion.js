@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pg"); // PostgreSQL connection
+const { pool, initializeDatabase }  = require("../pg"); // PostgreSQL connection
 
 // Get all questions for a specific quiz
 router.get("/questions/:id", async (req, res) => {
