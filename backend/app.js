@@ -26,7 +26,7 @@ const app = express();
 const port = 8000;
 
 app.use(cors({
-  origin: ["https://quiz.vercel.app"],
+  origin: ["https://deploying-quiz-vercel-render-tver.vercel.app"],
   methods: ["GET", "POST"],
 }));
 app.use(express.json());
