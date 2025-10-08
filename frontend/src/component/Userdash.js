@@ -64,7 +64,9 @@ const Userdash = () => {
       <main className="nexus-dashboard-main">
         <div className="nexus-hero-section">
           <div className="nexus-hero-content">
+            <h2>Created By Dhevesh</h2>
             <h1 className="nexus-hero-title">
+              
               Ready to Challenge 
               <span className="nexus-highlight"> Your Knowledge?</span>
             </h1>
