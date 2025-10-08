@@ -27,7 +27,7 @@ const port = 8000;
 
 app.use(cors({
   origin: ["https://deploying-quiz-vercel-render-cr4b.vercel.app"],
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST","PUT", "DELETE"],
 }));
 app.use(express.json());
 
