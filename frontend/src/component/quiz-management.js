@@ -19,7 +19,7 @@ const QuizManagement = () => {
   const fetchQuizzes = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`{url}/Quizdetails`);
+      const res = await axios.get(`${url}/Quizdetails`);
       setQuizData(res.data.quizdetails || []);
     } catch (error) {
       setMessage(error.message);

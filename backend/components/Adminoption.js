@@ -5,7 +5,7 @@ const { pool, initializeDatabase } = require("../pg");
 // Get options for a question
 router.get("/adminoptions/:id", async (req, res) => {
   try {
-    const { id } = req.params; // extract id
+    const { id } = req.params; 
     const result = await pool.query(
       "SELECT * FROM option WHERE question_id = $1",
       [id]
