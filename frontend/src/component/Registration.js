@@ -28,7 +28,7 @@ const Signup = () => {
     <div className="nexus-signup-container">
       <div className="nexus-signup-card">
         <div className="nexus-brand-section">
-          <h2>Take 1min To Register And Login</h2>
+          <h3>wait 1min after submit </h3>
           <h1 className="nexus-brand-title">NexusAuth</h1>
           <p className="nexus-brand-subtitle">Join our community today</p>
         </div>
