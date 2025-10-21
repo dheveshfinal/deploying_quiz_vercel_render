@@ -25,6 +25,7 @@ const Signup = () => {
   };
 
   return (
+    <h1>Take 1min To Register</h1>
     <div className="nexus-signup-container">
       <div className="nexus-signup-card">
         <div className="nexus-brand-section">
