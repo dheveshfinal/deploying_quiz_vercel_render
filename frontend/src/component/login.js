@@ -76,7 +76,7 @@ const Login = () => {
         
         <div className="nexus-signup-link">
           <p>Don't have an account? 
-            <a href="/signup" className="nexus-link"> Create one here</a>
+            <a href="/" className="nexus-link"> Create one here</a>
           </p>
         </div>
       </div>
