@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS public.question
 -- =========================================
 -- 4. QUIZ_OPTION TABLE
 -- =========================================
-CREATE TABLE IF NOT EXISTS public.quiz_option
+CREATE TABLE IF NOT EXISTS public.option
 (
     id SERIAL PRIMARY KEY,
     question_id INT REFERENCES public.question(id) ON DELETE CASCADE,
