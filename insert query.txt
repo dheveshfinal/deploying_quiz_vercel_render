@@ -1,0 +1,120 @@
+INSERT INTO users (username, password, email, role)
+VALUES
+('admin', '12', 'don@gmail.com', 'admin'),
+('dhevesh', '12', 'dhevesh@gmail.com', 'user');
+
+
+INSERT INTO quiz ("title", "description", "Status", "created_at")
+VALUES 
+('India Knowledge Test (Tough)', 'Advanced level quiz about India', 'active', NOW());
+
+INSERT INTO question (quiz_id, question_text, question_type, marks, correct_answer)
+VALUES
+(1, 'Which Indian state has the highest literacy rate?', 'mcq', 1, 'Kerala'),
+(1, 'Who was the first Indian to receive the Nobel Prize?', 'mcq', 1, 'Rabindranath Tagore'),
+(1, 'Which is India''s oldest mountain range?', 'mcq', 1, 'Aravalli Range'),
+(1, 'Where is India''s only active volcano located?', 'mcq', 1, 'Barren Island'),
+(1, 'Which Indian missile is known as "Agni-V"?', 'mcq', 1, 'Intercontinental Ballistic Missile'),
+(1, 'Who was the first Indian woman to go to space?', 'mcq', 1, 'Kalpana Chawla'),
+(1, 'Which river is known as the "Sorrow of Bengal"?', 'mcq', 1, 'Damodar River'),
+(1, 'Which Indian state has the largest forest cover?', 'mcq', 1, 'Madhya Pradesh'),
+(1, 'Who founded the Maurya Empire?', 'mcq', 1, 'Chandragupta Maurya'),
+(1, 'Which city is known as the Silicon Valley of India?', 'mcq', 1, 'Bengaluru'),
+(1, 'Where is the headquarters of ISRO located?', 'mcq', 1, 'Bengaluru'),
+(1, 'Which is the longest river in India?', 'mcq', 1, 'Ganga'),
+(1, 'Who wrote the book "Discovery of India"?', 'mcq', 1, 'Jawaharlal Nehru'),
+(1, 'Which Indian state is the largest producer of tea?', 'mcq', 1, 'Assam'),
+(1, 'In which year was the Indian Constitution adopted?', 'mcq', 1, '1949');
+
+
+INSERT INTO option (question_id, option_text) VALUES
+
+-- Q1 (Correct: B)
+(1, 'Tamil Nadu'),
+(1, 'Kerala'),
+(1, 'Goa'),
+(1, 'Karnataka'),
+
+-- Q2 (Correct: A)
+(2, 'Rabindranath Tagore'),
+(2, 'CV Raman'),
+(2, 'Mother Teresa'),
+(2, 'Amartya Sen'),
+
+-- Q3 (Correct: D)
+(3, 'Himalayas'),
+(3, 'Vindhyas'),
+(3, 'Satpura Range'),
+(3, 'Aravalli Range'),
+
+-- Q4 (Correct: C)
+(4, 'Lakshadweep'),
+(4, 'Andaman Trench'),
+(4, 'Barren Island'),
+(4, 'Nicobar Ridge'),
+
+-- Q5 (Correct: A)
+(5, 'Intercontinental Ballistic Missile'),
+(5, 'Short range missile'),
+(5, 'Cruise Missile'),
+(5, 'Anti-tank missile'),
+
+-- Q6 (Correct: D)
+(6, 'Sunita Williams'),
+(6, 'Valentina Tereshkova'),
+(6, 'Indira Gandhi'),
+(6, 'Kalpana Chawla'),
+
+-- Q7 (Correct: A)
+(7, 'Damodar River'),
+(7, 'Kaveri River'),
+(7, 'Yamuna River'),
+(7, 'Krishna River'),
+
+-- Q8 (Correct: C)
+(8, 'Arunachal Pradesh'),
+(8, 'Chhattisgarh'),
+(8, 'Madhya Pradesh'),
+(8, 'Odisha'),
+
+-- Q9 (Correct: B)
+(9, 'Ashoka'),
+(9, 'Chandragupta Maurya'),
+(9, 'Bindusara'),
+(9, 'Harsha'),
+
+-- Q10 (Correct: D)
+(10, 'Hyderabad'),
+(10, 'Pune'),
+(10, 'Chennai'),
+(10, 'Bengaluru'),
+
+-- Q11 (Correct: C)
+(11, 'Hyderabad'),
+(11, 'Mumbai'),
+(11, 'Bengaluru'),
+(11, 'Delhi'),
+
+-- Q12 (Correct: B)
+(12, 'Godavari'),
+(12, 'Ganga'),
+(12, 'Brahmaputra'),
+(12, 'Yamuna'),
+
+-- Q13 (Correct: C)
+(13, 'Mahatma Gandhi'),
+(13, 'Sarojini Naidu'),
+(13, 'Jawaharlal Nehru'),
+(13, 'APJ Abdul Kalam'),
+
+-- Q14 (Correct: A)
+(14, 'Assam'),
+(14, 'West Bengal'),
+(14, 'Kerala'),
+(14, 'Tamil Nadu'),
+
+-- Q15 (Correct: D)
+(15, '1950'),
+(15, '1947'),
+(15, '1952'),
+(15, '1949');
