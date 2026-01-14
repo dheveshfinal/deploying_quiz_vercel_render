@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 const Signup = () => {
   const [state, setState] = useState({ Name: "", email: "", password: "", role: "user" });
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_URL || "http://localhost:8000";
-
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(`${url}/signup`, state);
       setMessage(res.data.message);
@@ -21,9 +20,9 @@ const Signup = () => {
     } catch (err) {
       console.error(err);
       setMessage("Signup failed, please try again!");
+      setLoading(false);
     }
   };
-
   return (
     <div className="nexus-signup-container">
       <div className="nexus-signup-card">
@@ -70,8 +69,8 @@ const Signup = () => {
             />
           </div>
           
-          <button type="submit" className="nexus-submit-btn">
-            Create Account
+          <button type="submit" className="nexus-submit-btn" disabled={loading}>
+            {loading ? "Loading..." : "Create Account"}
           </button>
         </form>
         
@@ -90,5 +89,4 @@ const Signup = () => {
     </div>
   );
 };
-
 export default Signup;
