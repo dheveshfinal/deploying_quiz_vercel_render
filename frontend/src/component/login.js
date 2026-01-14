@@ -1,23 +1,21 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const Login = () => {
   const [log, setLog] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_URL || "http://localhost:8000";
-
   const handleChange = (e) => {
     setLog({ ...log, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
+    setLoading(true);
     try {
       const res = await axios.post(`${url}/login`, log);
       setMessage(res.data.message);
-
       // Check if user exists first
       if (res.data.user?.role === "user") {
         navigate(`/dashboard1/${res.data.user.id}`);
@@ -27,9 +25,9 @@ const Login = () => {
     } catch (err) {
       console.error(err);
       setMessage("Something went wrong");
+      setLoading(false);
     }
   };
-
   return (
     <div className="nexus-login-container">
       <div className="nexus-login-card">
@@ -48,6 +46,7 @@ const Login = () => {
               onChange={handleChange}
               className="nexus-input"
               required
+              disabled={loading}
             />
           </div>
           
@@ -60,11 +59,19 @@ const Login = () => {
               onChange={handleChange}
               className="nexus-input"
               required
+              disabled={loading}
             />
           </div>
           
-          <button type="submit" className="nexus-submit-btn">
-            Sign In
+          <button type="submit" className="nexus-submit-btn" disabled={loading}>
+            {loading ? (
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                <span className="spinner"></span>
+                Signing In...
+              </span>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
         
@@ -83,5 +90,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
