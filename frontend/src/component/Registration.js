@@ -4,7 +4,6 @@ import axios from "axios";
 const Signup = () => {
   const [state, setState] = useState({ Name: "", email: "", password: "", role: "user" });
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const url = process.env.REACT_APP_API_URL || "http://localhost:8000";
   const handleChange = (e) => {
@@ -12,15 +11,13 @@ const Signup = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
-      const res = await axios.post(`${url}/signup`, state);
+      const res = await axios.post${url}/signup, state);
       setMessage(res.data.message);
       navigate("/login");
     } catch (err) {
       console.error(err);
       setMessage("Signup failed, please try again!");
-      setLoading(false);
     }
   };
   return (
@@ -31,7 +28,7 @@ const Signup = () => {
           <h1 className="nexus-brand-title">NexusAuth</h1>
           <p className="nexus-brand-subtitle">Join our community today</p>
         </div>
-        
+
         <form onSubmit={handleSubmit} className="nexus-signup-form">
           <div className="nexus-form-group">
             <input 
@@ -44,7 +41,7 @@ const Signup = () => {
               required
             />
           </div>
-          
+
           <div className="nexus-form-group">
             <input 
               type="email" 
@@ -56,7 +53,7 @@ const Signup = () => {
               required
             />
           </div>
-          
+
           <div className="nexus-form-group">
             <input 
               type="password" 
@@ -68,18 +65,18 @@ const Signup = () => {
               required
             />
           </div>
-          
-          <button type="submit" className="nexus-submit-btn" disabled={loading}>
-            {loading ? "Loading..." : "Create Account"}
+
+          <button type="submit" className="nexus-submit-btn">
+            Create Account
           </button>
         </form>
-        
+
         {message && (
-          <div className={`nexus-message ${message.includes('failed') ? 'nexus-error' : 'nexus-success'}`}>
+          <div className=nexus-message ${message.includes('failed') ? 'nexus-error' : 'nexus-success'}}>
             {message}
           </div>
         )}
-        
+
         <div className="nexus-login-link">
           <p>Already have an account? 
             <a href="/login" className="nexus-link"> Sign in here</a>
